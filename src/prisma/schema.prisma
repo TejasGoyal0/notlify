@@ -14,3 +14,11 @@ model User {
   passwordHash String
   createdAt    DateTime @default(now())
 }
+
+model Booking { 
+  id String @id @default(uuid())
+  email String 
+  showId String 
+  amount Int
+  isPaymentVerified Boolean
+}

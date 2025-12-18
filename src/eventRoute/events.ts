@@ -34,8 +34,7 @@ export type bookingConfirmedEvent = BaseEvent<
 EventTypes.BOOKING_CONFIRMED, 
 {
     email : string , 
-    bookingId : string, 
-    name : string
+    bookingId : string
 }
 >;
 
