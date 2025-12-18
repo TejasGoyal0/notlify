@@ -9,7 +9,7 @@ export const welcomeMailWorker = new Worker(
   async (job) => {
     console.log("[WORKER] Processing job", job.id, job.name, job.data);
 
-    if (job.name === "welcome-email") {
+    if (job.name === "send-welcome-email") {
       const { email, name } = job.data as { email: string; name: string };
 
       // TEMP: log before calling Resend

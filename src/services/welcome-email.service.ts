@@ -8,7 +8,7 @@ export const emailService = {
     const { email, name } = input;
 
     const { data, error } = await resend.emails.send({
-      from: "Notifly <onboarding@resend.dev>", // change to your verified domain later
+      from: "Notifly <onboarding@resend.dev>", 
       to: email,
       subject: "Welcome to Notifly!",
       html: `

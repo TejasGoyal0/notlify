@@ -1,7 +1,7 @@
 import type {Request , Response} from 'express';
-import { welcomeQueue } from "../../queues/welcome.queue.js";
-import {signedinQueue} from "../../queues/signedin.queue.js"
 import { authService } from '../../domains/auth/auth.service.js';
+import { emitUserSignedUpEvent , emitUserSignedInEvent} from '../../events/auth.events.js';
+
 
 export async function signupController(req: Request, res: Response) {
   try {
@@ -9,12 +9,7 @@ export async function signupController(req: Request, res: Response) {
 
     const user = await authService.signup({ name, email, password });
 
-    const job = await welcomeQueue.add("welcome-email", {
-      email: user.email,
-      name: user.name,
-    });
-
-    console.log("[SIGNUP] Enqueued welcome-email job:", job.id, job.data);
+     await emitUserSignedUpEvent(user);
 
     res.status(201).json({
       user: {
@@ -39,16 +34,14 @@ export async function signinController(req:Request , res:Response){
 
     const session = await authService.signin({email , password})
     const user = session.user;
-
-    const job = await signedinQueue.add("signedin-mail",
-      { email:user.email }
-    )
-
-    console.log("SignIn Job Enqueues:" , job.id , job.data);
-
+    
+    await emitUserSignedInEvent(user);
+    console.log("User Signed in Event emitted for :", user.email);
+   
     res.status(201).json({
       user:{
-        email : user.email
+        email : user.email, 
+        id : user.id
       },
 
     });

@@ -17,14 +17,16 @@ export type userSignedUpEvent = BaseEvent<
 EventTypes.USER_SIGNED_UP, 
 {
     name : string , 
-    email : string
+    email : string,
+    userId : string
 }
 >;
 
 export type userSignedInEvent = BaseEvent<
 EventTypes.USER_SIGNED_IN , 
 {
-  email : string
+  email : string,
+  userId : string
 }
 >;
 

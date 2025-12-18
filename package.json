@@ -27,6 +27,7 @@
     "bcrypt": "^6.0.0",
     "bull": "^4.16.5",
     "bullmq": "^5.65.1",
+    "crypto": "^1.0.1",
     "dotenv": "^17.2.3",
     "express": "^5.2.1",
     "express-jwt": "^8.5.1",
