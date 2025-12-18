@@ -18,9 +18,7 @@ export class eventRouterService {
             case EventTypes.BOOKING_CONFIRMED: 
                  return this.handleBookingConfirmed(event);
 
-            case EventTypes.PAYMENT_COMPLETED:
-                return this.handlePaymentCompleted(event);
-
+            
         }
     }
     private static async handleUserSignUp(event : any){
@@ -42,9 +40,35 @@ export class eventRouterService {
 
     private static async handleBookingConfirmed(event : any){
         
+        const flow = {
+            name : "booking-flow" , 
+            queueName : "booking-email-queue", 
+            data : {
+                bookingId : event.payload.eventsId
+            },
+            children : [ 
+                {
+                    queueName : "booking-email-queue", 
+                    name : "send-booking-confirmation" , 
+                    data : {
+                        bookingId : event.payload.bookingId
+                    },
+                    children : [ 
+                        {
+                           queueName : "booking-email-queue" , 
+                           name : "generate-tickets" , 
+                           data : {
+                            bookingId : event.payload.bookingId 
+                           }
+                        }
+                    ]
+
+                }
+
+            ]
+        }
+        await flowProducer.add(flow);
     }
 
-    private static async handlePaymentCompleted(event : any){
-        
-    }
+    
 }

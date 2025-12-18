@@ -32,22 +32,15 @@ export type bookingConfirmedEvent = BaseEvent<
 EventTypes.BOOKING_CONFIRMED, 
 {
     email : string , 
-    eventId : string, 
+    bookingId : string, 
     name : string
 }
 >;
 
-export type paymentCompletedEvent = BaseEvent<
-EventTypes.PAYMENT_COMPLETED , 
-{
-    email : string , 
-    paymentId : string , 
-    eventId : string
-}
->;
+
+
 
 export type domainEvent = 
 | userSignedUpEvent
 | userSignedInEvent
 | bookingConfirmedEvent
-| paymentCompletedEvent;
