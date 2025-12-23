@@ -86,4 +86,101 @@ Make sure you have the following installed:
 - Resend API Key for email
 
 ---
+## 🚀 Getting Started
+
+### 1️⃣ Clone the Repo
+
+```bash
+git clone https://github.com/TejasGoyal0/notlify.git
+cd notlify
+
+```
+### 2️⃣ Install Dependencies
+```bash
+
+npm install
+# or
+yarn install
+```
+### 3️⃣ Environment Variables
+
+Create a .env file in the root, and fill in required values:
+DATABASE_URL="postgresql://<user>:<pass>@<host>:<port>/<db>?schema=public"
+REDIS_HOST=127.0.0.1
+REDIS_PORT=6379
+RESEND_API_KEY=your_resend_api_key
+
+### 4️⃣ Run Prisma Migrations
+```bash
+npx prisma migrate dev --name init
+```
+### 5️⃣ Start Dev Processes
+In separate terminals:
+```bash
+npm run dev          # API server
+npm run worker       # Worker processes
+```
+## 📌 How to Use
+
+After starting:
+
+- Hit API endpoints to emit domain events.
+
+- Watch workers pick up jobs from Redis.
+
+- Jobs execute workflows like sending emails and ticket creation.
+
+- Add more workflows by extending the router and worker cases.
+
+## 🧩 Architecture Diagram
+
+[API Controllers] —> [Event Router] —> [BullMQ Queue / FlowProducer]
+                             |                          |
+                   [Multiple Redis Queues]        [Worker Consumers]
+                             |                          |
+                    Email / Ticket / Analytics    Business Logic
+
+
+## 🧠 Detailed Concepts
+
+### 📍 Event-Driven Design
+
+Controllers never directly trigger side effects. They emit events that are durable and observable. This decouples API surface from workflow logic and allows safe retries or replay of events.
+
+### 📍 Workflow Orchestration
+
+Flows express job dependencies.
+Each parent/child relationship models sequential or parallel steps in a workflow (e.g., confirmation → ticketing → analytics).
+
+## ✔ Logging & Observability
+Workers log job progress and capture errors:
+
+- worker.on("completed", job => console.log("Completed:", job.id));
+- worker.on("failed", (job, err) => console.error("Failed:", job.id, err));
+
+### 🧠 Contributing
+Notlify is open-source and ready for collaboration.
+
+If you want to:
+
+- Add metrics and observability dashboards
+
+- Introduce a stress test CLI
+
+- Improve resilience or monitoring
+
+please fork the repo and submit a PR.
+
+## 🧑‍💻 About the Author
+Tejas Goyal – Backend engineer passionate about distributed systems, background jobs, and real-world infrastructure challenges.
+Connect:
+- GitHub: https://github.com/TejasGoyal0
+- LinkedIn: https://www.linkedin.com/in/tejas-goyal-862017246/
+- Email: tejasgoyal72@gmail.com
+
+
+
+
+
+
 
