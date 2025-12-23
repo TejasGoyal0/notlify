@@ -105,10 +105,10 @@ yarn install
 ### 3️⃣ Environment Variables
 
 Create a .env file in the root, and fill in required values:
-DATABASE_URL="postgresql://<user>:<pass>@<host>:<port>/<db>?schema=public"
-REDIS_HOST=127.0.0.1
-REDIS_PORT=6379
-RESEND_API_KEY=your_resend_api_key
+- DATABASE_URL="postgresql://<user>:<pass>@<host>:<port>/<db>?schema=public"
+- REDIS_HOST=127.0.0.1
+- REDIS_PORT=6379
+- RESEND_API_KEY=your_resend_api_key
 
 ### 4️⃣ Run Prisma Migrations
 ```bash
